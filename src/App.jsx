@@ -1,13 +1,15 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { IoLockClosed, IoMail, IoPersonOutline } from "react-icons/io5";
 import Input from "./components/Inputs/Input";
+import ImageInput from "./components/inputs/ImageInput";
 
 function App() {
   const {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -31,40 +33,63 @@ function App() {
               label="First name"
               register={register}
               required="Please enter your first name."
-              errors
+              errors={errors}
+              control={control}
             />
             <Input
               icon={<IoPersonOutline />}
-              errors
+              errors={errors}
               name="lastName"
               id="lastName"
               type="text"
               placeholder="Last name"
               label="Last name"
               register={register}
+              control={control}
               required="Please enter your last name."
             />
             <Input
               icon={<IoMail />}
-              errors
+              errors={errors}
               name="email"
               id="email"
               type="email"
               placeholder="Email"
               label="Email"
               register={register}
+              control={control}
               required="Please enter your email."
             />
             <Input
               icon={<IoLockClosed />}
-              errors
+              errors={errors}
               name="password"
               id="password"
               type="password"
               placeholder="Password"
               label="Password"
               register={register}
+              control={control}
               required="Please enter your password."
+            />
+            <ImageInput
+              errors={errors}
+              name="logo"
+              id="logo"
+              register={register}
+              label="Logo"
+              control={control}
+              required="Please upload the logo."
+            />
+            <ImageInput
+              errors={errors}
+              name="docs"
+              id="docs"
+              multiple
+              register={register}
+              label="Documents"
+              control={control}
+              required="Please upload all documents."
             />
             <button
               type="submit"
@@ -73,41 +98,6 @@ function App() {
               Save
             </button>
           </form>
-          <div className="col-span-full">
-            <label
-              htmlFor="cover-photo"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Cover photo
-            </label>
-            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-              <div className="text-center">
-                <PhotoIcon
-                  className="mx-auto h-12 w-12 text-gray-300"
-                  aria-hidden="true"
-                />
-                <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                  >
-                    <span>Upload a file</span>
-                    <input
-                      id="file-upload"
-                      name="file-upload"
-                      type="file"
-                      className="sr-only"
-                      {...register("logo")}
-                    />
-                  </label>
-                  <p className="pl-1">or drag and drop</p>
-                </div>
-                <p className="text-xs leading-5 text-gray-600">
-                  PNG, JPG, GIF up to 10MB
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
       <section className="bg-yellow-400">

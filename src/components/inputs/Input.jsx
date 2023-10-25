@@ -1,7 +1,10 @@
 import React from "react";
 import { IoPersonOutline } from "react-icons/io5";
+import { cn } from "../../utils/utils";
+import { useWatch } from "react-hook-form";
 
 const Input = ({
+  className,
   label,
   name,
   id,
@@ -11,8 +14,14 @@ const Input = ({
   register,
   required,
   errors,
+  control,
   ...inputProps
 }) => {
+  const test = useWatch({
+    control,
+    name,
+  });
+  console.log(test);
   return (
     <div>
       {label && (
@@ -25,7 +34,12 @@ const Input = ({
       )}
 
       <div>
-        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+        <div
+          className={cn(
+            "flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md",
+            className
+          )}
+        >
           {icon && (
             <span className="flex select-none items-center p-2 text-gray-500 sm:text-sm">
               {icon}
@@ -43,9 +57,9 @@ const Input = ({
             placeholder={placeholder}
             {...inputProps}
           />
-          {errors.name && <p>{errors.message}</p>}
         </div>
       </div>
+      {errors[name] && <p>{errors[name].message}</p>}
     </div>
   );
 };
